@@ -1,16 +1,9 @@
 package com.wrbug.dumpdex.dump;
 
-import android.app.Application;
-import android.content.Context;
-
 import com.wrbug.dumpdex.BuildConfig;
 import com.wrbug.dumpdex.Native;
 
-import java.io.File;
-
-import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 /**

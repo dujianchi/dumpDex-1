@@ -13,14 +13,14 @@ public class Native {
         XposedBridge.log("dumpdex.Native-> " + txt);
     }
     static {
-        try {
-            System.load("/data/local/tmp/libnativeDump.so");
-            log("loaded libnativeDump.so");
-        } catch (Throwable t) {
-            System.load("/data/local/tmp/libnativeDump64.so");
-            log("loaded libnativeDump64.so");
-        }
-//        System.loadLibrary("nativeDump");
+//        try {
+//            System.load("/data/local/tmp/libnativeDump.so");
+//            log("loaded libnativeDump.so");
+//        } catch (Throwable t) {
+//            System.load("/data/local/tmp/libnativeDump64.so");
+//            log("loaded libnativeDump64.so");
+//        }
+        System.loadLibrary("nativeDump");
     }
 
     public static native void dump(String packageName);

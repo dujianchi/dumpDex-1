@@ -1,5 +1,6 @@
 package com.wrbug.dumpdex;
 
+import android.content.Context;
 import android.os.Build;
 
 import com.wrbug.dumpdex.dump.LowSdkDump;
@@ -10,6 +11,7 @@ import java.io.File;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 /**
@@ -39,18 +41,29 @@ public class XposedInit implements IXposedHookLoadPackage {
         if (type == null) {
             return;
         }
+        log("------ type name: " + type.getName());
         final String packageName = lpparam.packageName;
         if (lpparam.packageName.equals(packageName)) {
+//            Context systemContext = (Context) XposedHelpers.callMethod(
+//                    XposedHelpers.callStaticMethod(
+//                            XposedHelpers.findClass(
+//                                    "android.app.ActivityThread", lpparam.classLoader
+//                            ), "currentActivityThread"
+//                    ), "getSystemContext"
+//            );
+//            log("----- context: " + systemContext);
+//            String path = systemContext.getFilesDir().getPath() + "/data/" + packageName + "/dump";
             String path = "/data/data/" + packageName + "/dump";
+            log("----- path: " + path);
             File parent = new File(path);
             if (!parent.exists() || !parent.isDirectory()) {
                 parent.mkdirs();
             }
             log("sdk version:" + Build.VERSION.SDK_INT);
-            if (DeviceUtils.isOreo() || DeviceUtils.isPie() || DeviceUtils.isAndroid10()) {
+            if (DeviceUtils.isOreo()) {
                 OreoDump.init(lpparam);
             } else {
-                LowSdkDump.init(lpparam,type);
+                LowSdkDump.init(lpparam, type);
             }
 
         }
